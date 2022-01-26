@@ -1,4 +1,3 @@
-import moment from 'moment';
 import getConfig from 'next/config';
 import { fetchWrapper } from 'helpers';
 

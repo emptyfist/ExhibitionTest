@@ -3,15 +3,25 @@ import _ from 'lodash';
 import moment from 'moment';
 import clsx from 'clsx';
 import React from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import RelativeImage from 'components/RelativeImage';
 
 export default function Item({data}) {
+  const router = useRouter();
+
+  const exhibitionSelected = (exhibitionId) => {
+    router.push({
+      pathname: `/exhibition/${exhibitionId}`,
+    });
+  };
+
   return (
     <Box 
       className={clsx('research-content-item', 'box-wrapper-shadow')}
       sx={{padding: '1rem'}}
+      onClick={e=>exhibitionSelected(data.id)}
       >
       <Box className='profile'>
         <RelativeImage

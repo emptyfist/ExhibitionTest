@@ -15,10 +15,10 @@ export default function ItemLoading() {
       </Box>
       <Box className='followers'>
         <Box className='first'>
-          <Skeleton width={'15rem'} height={20} sx={{transform: 'unset'}}/>
+          <Skeleton width={'100%'} height={20} sx={{transform: 'unset'}}/>
         </Box>
         <Box className='second'>
-          <Skeleton width={'15rem'} height={20} sx={{transform: 'unset'}}/>
+          <Skeleton width={'100%'} height={20} sx={{transform: 'unset'}}/>
         </Box>
       </Box>
     </Box>
