@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import Empty from 'layouts/Empty';
 import { apiService } from 'services';
 import { Item, ItemLoading } from './components';
@@ -29,6 +28,22 @@ const ExhibitionList = () => {
     });
   }
 
+  const loadMore = async (e) => {
+    setIsLoading(true);
+
+    let retVal = await getExhibitionsFromServer(pageInfo.page + 1);
+    if (retVal) {
+      setDataToState(retVal);
+    }
+  }
+
+  const setDataToState = (retVal) => {
+    const {data, pagination} = retVal;
+    setLists([...lists, ...data]);
+    setIsLoading(false);
+    setPageInfo({page: pagination.current_page, total: pagination.total_pages});
+  }
+
   useEffect(async () => {
     let retVal = await getExhibitionsFromServer(pageInfo.page);
 
@@ -38,11 +53,7 @@ const ExhibitionList = () => {
         return;
       }
 
-      const {data, pagination} = retVal;
-      console.log(pagination);
-      setLists(data);
-      setIsLoading(false);
-      setPageInfo({page: pagination.current_page, total: pagination.total_pages});
+      setDataToState(retVal);
     }
 
     return () => isMounted.current = false;
@@ -56,10 +67,13 @@ const ExhibitionList = () => {
             <Item key={itm.id} data={itm} />
           ))}
           {isLoading && 
-            Array.from({length: 10}, (_, i) => i).map(itm => (
+            Array.from({length: 12}, (_, i) => i).map(itm => (
               <ItemLoading key={itm} />
             ))
           }
+        </Box>
+        <Box className='exhibition-load-more'>
+          <Button disabled={isLoading || pageInfo.page >= pageInfo.total} onClick={loadMore}>Load more exhibitions...</Button>
         </Box>
       </Empty>
     </Box>

@@ -30,7 +30,7 @@ const Empty = ({ children }) => {
       >
         <Topbar />
       </AppBar>
-      <main style={{minHeight: 'calc(100vh)', paddingTop: '64px'}}>
+      <main style={{minHeight: 'calc(100vh)', paddingTop: '64px', overflow: 'hidden'}}>
         {children}
       </main>
     </Box>
